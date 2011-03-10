@@ -1,0 +1,18 @@
+<%=
+@xml.instruct! :xml, :version => "1.0", :encoding => "utf-8"
+@xml.AssetBase('xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
+    'xmlns:xsd' => 'http://www.w3.org/2001/XMLSchema'
+) {
+    @xml.Data(@asset.file_data)
+    @xml.FullID {
+        @xml.Guid(@asset.id)
+    }
+    @xml.ID(@asset.id)
+    @xml.Name(@asset.name)
+    @xml.Description(@asset.description)
+    @xml.Type(@asset.asset_type)
+    @xml.Local(@asset.local)
+    @xml.Temporary(@asset.temporary)
+    @xml.Flags(@asset.flags)
+}
+%>
