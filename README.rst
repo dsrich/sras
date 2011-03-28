@@ -17,6 +17,14 @@ the next few days.
     -- coyled, 2011-03-27
 
 
+Features
+--------
+
+ * Asset de-duplication
+ * Compressed asset storage on disk
+ * Ability to disable serving of specific assets without deleting
+
+
 Install
 -------
 
