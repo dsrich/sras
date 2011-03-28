@@ -1,6 +1,1 @@
-<%=
-@xml.instruct! :xml, :version => "1.0", :encoding => "utf-8"
-@xml.AssetBase {
-    @xml.Data(@asset.file_data)
-}
-%>
+<%= @asset_data %>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AssetBase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"> 
+  <Data>SGkuICBJJ20gYSBzdWJtaXR0ZWQgYXNzZXQhCg==
+</Data> 
+  <FullID> 
+    <Guid>0193663d-44e4-4e6e-9a1c-8dd2febc5fc5</Guid> 
+  </FullID> 
+  <ID>0193663d-44e4-4e6e-9a1c-8dd2febc5fc5</ID> 
+  <Name>test1</Name> 
+  <Description>test submitted asset</Description> 
+  <Type>10</Type> 
+  <Local>true</Local> 
+  <Temporary>false</Temporary> 
+</AssetBase>

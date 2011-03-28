@@ -1,0 +1,8 @@
+TODO
+====
+
+* update creation and update timestamps
+
+* don't retrieve disabled assets
+
+* disable showing exceptions in HTTP responses

@@ -1,18 +1,13 @@
-<%=
-@xml.instruct! :xml, :version => '1.0', :encoding => 'utf-8'
-@xml.AssetMetadata('xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
-    'xmlns:xsd' => 'http://www.w3.org/2001/XMLSchema'
-) {
-    @xml.FullID {
-        @xml.Guid(@asset.id)
-    }
-    @xml.ID(@asset.id)
-    @xml.Name(@asset.name)
-    @xml.Description(@asset.description)
-    @xml.CreationDate(@asset.created_at_iso8601)
-    @xml.Type(@asset.asset_type)
-    @xml.Local(@asset.local)
-    @xml.Temporary(@asset.temporary)
-    @xml.Flags(@asset.flags)
-}
-%>
+<?xml version="1.0" encoding="utf-8"?> 
+<AssetMetadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"> 
+  <FullID> 
+    <Guid><%= @asset.id %></Guid> 
+  </FullID> 
+  <ID><%= @asset.id %></ID> 
+  <Name><%= @asset.name %></Name> 
+  <Description><%= @asset.description %></Description> 
+  <CreationDate><%= @asset.created_at.to_time.iso8601 %></CreationDate> 
+  <Type><%= @asset.asset_type %></Type> 
+  <Local><%= @asset.local %></Local> 
+  <Temporary><%= @asset.temporary %></Temporary> 
+</AssetMetadata>
