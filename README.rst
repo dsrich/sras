@@ -1,5 +1,5 @@
-SRAS -- Simple Ruby Asset Server... for OpenSimulator
-=====================================================
+SRAS (v2) -- Simple Ruby Asset Server... for OpenSimulator
+==========================================================
 
 [ Note: I rewrote all of the original code, so this is actually a new
 repo.  If you had cloned the old repo from here, delete and re-clone
