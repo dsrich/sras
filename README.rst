@@ -34,7 +34,7 @@ anyway.
 
 Built & testing with Ruby v1.9.2.
 
-Install gems:
+Install gems: ::
 
     $ gem install bundler
     $ cd /path/to/sras
@@ -46,7 +46,7 @@ Tested with Thin, but should also work with Passenger.
 Running
 -------
 
-If using Thin, just:
+If using Thin, just: ::
 
     $ ./runme.sh
 
