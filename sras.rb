@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+require 'bundler'
+Bundler.setup
+
 require 'sinatra'
 require 'erb'
 require 'base64'

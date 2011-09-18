@@ -36,15 +36,11 @@ Built & testing with Ruby v1.9.2.
 
 Install gems:
 
-    # gem install dm-mysql-adapter dm-timestamps dm-types hpricot sinatra
+    $ gem install bundler
+    $ cd /path/to/sras
+    $ bundle install
 
-Tested with Thin, but should also work with Passenger.  So:
-
-    # gem install thin
-
-or:
-
-    # gem install passenger
+Tested with Thin, but should also work with Passenger.
 
 
 Running
