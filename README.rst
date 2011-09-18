@@ -36,7 +36,7 @@ Built & testing with Ruby v1.9.2.
 
 Install gems:
 
-    # gem install dm-mysql-adapter dm-types hpricot sinatra
+    # gem install dm-mysql-adapter dm-timestamps dm-types hpricot sinatra
 
 Tested with Thin, but should also work with Passenger.  So:
 

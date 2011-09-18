@@ -1,5 +1,6 @@
 require 'dm-core'
 require 'dm-types'
+require 'dm-timestamps'
 
 configure :development do
     DataMapper::Logger.new(STDOUT, :debug)
