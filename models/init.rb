@@ -1,7 +1,10 @@
 require 'dm-core'
 require 'dm-types'
 
-DataMapper::Logger.new(STDOUT, :debug)
+configure :development do
+    DataMapper::Logger.new(STDOUT, :debug)
+end
+
 DataMapper.setup(:default, {
     :adapter    => 'mysql',
     :host       => 'localhost',
