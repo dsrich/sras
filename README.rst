@@ -1,20 +1,9 @@
 SRAS (v2) -- Simple Ruby Asset Server... for OpenSimulator
 ==========================================================
 
-[ Note: I rewrote all of the original code, so this is actually a new
-repo.  If you had cloned the old repo from here, delete and re-clone
-to get the latest. ]
-
-
-Status
-------
-
-Still have some small bits to complete and some more testing to do in
-the next few days.
-
-*** This version isn't ready for production use yet. ***
-
-    -- coyled, 2011-03-27
+[ Note: I rewrote all of the original code from 2010, so this is
+actually a new repo.  If you had cloned the old repo from here, delete
+and re-clone to get the latest. ]
 
 
 Features
@@ -23,6 +12,12 @@ Features
  * Asset de-duplication
  * Compressed asset storage on disk
  * Ability to disable serving of specific assets without deleting
+
+
+Upcoming Features
+-----------------
+
+ * MongoDB support
 
 
 Install
@@ -50,4 +45,5 @@ If using Thin, just: ::
 
     $ ./runme.sh
 
-for a single instance.
+for a single instance.  In a production environment you would want to
+run several instances behind a reverse proxy like Nginx.
