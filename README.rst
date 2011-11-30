@@ -1,10 +1,5 @@
-SRAS (v2) -- Simple Ruby Asset Server... for OpenSimulator
+SRAS -- Simple Ruby Asset Server... for OpenSimulator
 ==========================================================
-
-[ Note: I rewrote all of the original code from 2010, so this is
-actually a new repo.  If you had cloned the old repo from here, delete
-and re-clone to get the latest. ]
-
 
 Features
 --------
@@ -12,12 +7,6 @@ Features
  * Asset de-duplication
  * Compressed asset storage on disk
  * Ability to disable serving of specific assets without deleting
-
-
-Upcoming Features
------------------
-
- * MongoDB support
 
 
 Install
