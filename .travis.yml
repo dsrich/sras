@@ -6,3 +6,5 @@ gemfile:
 branches:
     only:
         - master
+before_script:
+    - "mysql -e 'create database sras_test;'"
