@@ -20,6 +20,8 @@ class SRAS < Sinatra::Application
     end
 
     post '/assets/?' do
+        content_type 'application/xml'
+
         doc = Hpricot.XML(request.body.read)
 
         # 404 if the ID already exists.  need to revisit this.
@@ -40,7 +42,7 @@ class SRAS < Sinatra::Application
         )
         write_asset_data
         @asset.save
-
+        erb :create
     end
 
     get '/assets/:asset_id' do
@@ -70,6 +72,7 @@ class SRAS < Sinatra::Application
     get '/assets/:asset_id/metadata' do
         if @asset = Asset.get(params[:asset_id])
             if @asset_data = get_asset_data(params[:asset_id])
+                content_type :asset_type
                 erb :metadata
             else
                 not_found
