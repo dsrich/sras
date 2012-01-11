@@ -7,11 +7,11 @@ configure :development do
 end
 
 DataMapper.setup(:default, {
-    :adapter    => 'mysql',
-    :host       => 'localhost',
-    :username   => 'sras',
-    :password   => 'sras',
-    :database   => 'sras'
+    :adapter    => @db_config[@dbms][RACK_ENV]['adapter'],
+    :host       => @db_config[@dbms][RACK_ENV]['host'],
+    :username   => @db_config[@dbms][RACK_ENV]['username'],
+    :password   => @db_config[@dbms][RACK_ENV]['password'],
+    :database   => @db_config[@dbms][RACK_ENV]['database']
 })
 
 require ::File.dirname(__FILE__) + '/asset'

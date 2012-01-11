@@ -90,5 +90,5 @@ class SRAS < Sinatra::Application
 
 end
 
-require ::File.dirname(__FILE__) + '/models/init'
 require ::File.dirname(__FILE__) + '/helpers/init'
+require ::File.dirname(__FILE__) + '/models/init'

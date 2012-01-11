@@ -1,0 +1,32 @@
+#
+# copy or rename this database.yml.example file to database.yml and
+# edit below...
+#
+
+mysql:
+    # the below 'production' settings are the only ones you need to
+    # update unless you plan on making changes to SRAS code...
+    production:
+        adapter: mysql
+        host: localhost
+        username: sras
+        password: sras
+        database: sras
+
+    # the below 'test' settings will be used only if you run tests.
+    # you can ignore, delete, or change these...
+    test:
+        adapter: mysql
+        host: localhost
+        username: sras_test
+        password: sras_test
+        database: sras_test
+
+    # the 'development' settings below are used only by the Travis CI
+    # service which is triggered when SRAS code changes are committed
+    # to GitHub.  you can ignore, delete, or change these...
+    development:
+        adapter: mysql2
+        database: sras_test
+        username:
+        encoding: ascii
