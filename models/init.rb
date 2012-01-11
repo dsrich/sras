@@ -7,11 +7,11 @@ configure :development do
 end
 
 DataMapper.setup(:default, {
-    :adapter    => @db_config[@dbms][RACK_ENV]['adapter'],
-    :host       => @db_config[@dbms][RACK_ENV]['host'],
-    :username   => @db_config[@dbms][RACK_ENV]['username'],
-    :password   => @db_config[@dbms][RACK_ENV]['password'],
-    :database   => @db_config[@dbms][RACK_ENV]['database']
+    :adapter    => @config[@dbms][RACK_ENV]['adapter'],
+    :host       => @config[@dbms][RACK_ENV]['host'],
+    :username   => @config[@dbms][RACK_ENV]['username'],
+    :password   => @config[@dbms][RACK_ENV]['password'],
+    :database   => @config[@dbms][RACK_ENV]['database']
 })
 
 require ::File.dirname(__FILE__) + '/asset'
