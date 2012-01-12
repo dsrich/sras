@@ -1,4 +1,5 @@
 source "http://rubygems.org"
+gem 'dm-migrations'
 gem 'dm-mysql-adapter'
 gem 'dm-timestamps'
 gem 'dm-types'

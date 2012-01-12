@@ -17,14 +17,14 @@
 
 class Asset
     include DataMapper::Resource
-    property :id, String, :key => true
+    property :id, String, :length => 36, :key => true
     property :asset_type, Integer
-    property :sha256, String
-    property :name, String
-    property :description, String
+    property :sha256, String, :length => 64
+    property :name, String, :length => 64
+    property :description, String, :length => 64
     property :local, Boolean
     property :temporary, Boolean
-    property :base_dir, String, :default => $default_asset_dir
+    property :base_dir, String, :length => 64, :default => $default_asset_dir
     property :created_at, EpochTime
     property :updated_at, EpochTime
     property :enabled, Boolean, :default => true
