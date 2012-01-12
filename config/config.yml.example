@@ -5,13 +5,13 @@
 
 sras:
     production:
-        default_asset_location: /srv/sras
+        default_asset_dir: /srv/sras
 
     #test:
-    #    default_asset_location: /var/tmp/sras
+    #    default_asset_dir: /var/tmp/sras
 
     #development:
-    #    default_asset_location: /var/tmp/sras
+    #    default_asset_dir: /var/tmp/sras
 
 
 mysql:

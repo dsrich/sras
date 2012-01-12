@@ -24,7 +24,7 @@ class Asset
     property :description, String
     property :local, Boolean
     property :temporary, Boolean
-    property :base_dir, String, :default => '/srv/sras'
+    property :base_dir, String, :default => $default_asset_dir
     property :created_at, EpochTime
     property :updated_at, EpochTime
     property :enabled, Boolean, :default => true
