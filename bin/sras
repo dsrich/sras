@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+
+options = {}
+
+OptionParser.new do |opts|
+    #defaults...
+    options[:environment] = 'production'
+
+    opts.banner = 'Usage: sras [options]'
+
+    opts.on('-e', '--environment <production|development|test>',
+                'Environment to run under') do |e|
+        options[:environment] = e
+    end
+
+    opts.on('-p', '--port <N>', Integer, 'TCP port to which to bind') do |p|
+        options[:port] = p
+    end
+
+    opts.on('-l', '--log <file>', Integer, 'Log file') do |l|
+        options[:log] = l
+    end
+end.parse!
+
+# base thin options...
+thin_opts = '--tag sras -d -R config.ru'
+thin_opts << " -e #{options[:environment]}"
+
+if options[:log]
+    thin_opts << " -l #{options[:log]}"
+else
+    thin_opts << " -l log/sras_#{options[:environment]}.log"
+end
+
+if options[:port]
+    thin_opts << " -p #{options[:port]}"
+else
+    thin_opts << " -p 8003"
+end
+
+system "/usr/bin/env thin #{thin_opts} start"
