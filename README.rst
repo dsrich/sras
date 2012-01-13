@@ -30,7 +30,13 @@ Tested with Thin, but should also work with Passenger.
 Running
 -------
 
-If using Thin, just: ::
+Configure: ::
+
+    $ cp config/config.yml.example config/config.yml
+    $ # edit config/config.yml to your liking
+    $ rake db:create
+
+Then, if using Thin, just: ::
 
     $ ./runme.sh
 
