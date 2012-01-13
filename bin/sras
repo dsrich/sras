@@ -47,7 +47,7 @@ OptionParser.new do |opts|
 end.parse!
 
 # base thin options...
-thin_opts = '--tag sras -d -R config.ru'
+thin_opts = "--tag sras -d -R #{::File.dirname(__FILE__)}/../config.ru"
 thin_opts << " -e #{options[:environment]}"
 
 if options[:log]
