@@ -48,6 +48,7 @@ class SRAS < Sinatra::Application
     get '/assets/:asset_id' do
         if @asset = Asset.get(params[:asset_id])
             if @asset_data = get_asset_data(params[:asset_id])
+                content_type get_asset_type(@asset.asset_type)
                 erb :show
             else
                 not_found
@@ -60,6 +61,7 @@ class SRAS < Sinatra::Application
     get '/assets/:asset_id/data' do
         if @asset = Asset.get(params[:asset_id])
             if @asset_data = get_asset_data(params[:asset_id])
+                content_type 'application/octet-stream'
                 erb :data
             else
                 not_found
@@ -72,7 +74,7 @@ class SRAS < Sinatra::Application
     get '/assets/:asset_id/metadata' do
         if @asset = Asset.get(params[:asset_id])
             if @asset_data = get_asset_data(params[:asset_id])
-                content_type :asset_type
+                content_type get_asset_type(@asset.asset_type)
                 erb :metadata
             else
                 not_found
