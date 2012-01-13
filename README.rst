@@ -36,9 +36,14 @@ Configure: ::
     $ # edit config/config.yml to your liking
     $ rake db:create
 
-Then, if using Thin, just: ::
+Then just: ::
 
-    $ ./runme.sh
+    $ bin/sras start
 
 for a single instance.  In a production environment you would want to
 run several instances behind a reverse proxy like Nginx.
+
+To see additional options: ::
+
+    $ bin/sras --help
+

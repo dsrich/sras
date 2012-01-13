@@ -8,10 +8,10 @@ OptionParser.new do |opts|
     #defaults...
     options[:environment] = 'production'
 
-    opts.banner = 'Usage: sras [options]'
+    opts.banner = 'Usage: sras [options] <start|stop|restart>'
 
     opts.on('-e', '--environment <production|development|test>',
-                'Environment to run under') do |e|
+                'Environment in which to run') do |e|
         options[:environment] = e
     end
 
@@ -22,6 +22,25 @@ OptionParser.new do |opts|
     opts.on('-l', '--log <file>', Integer, 'Log file') do |l|
         options[:log] = l
     end
+
+    opts.on_tail('-h', '--help', 'Show this message') do
+        puts opts
+        exit
+    end
+
+    if ARGV[0]
+        command = ARGV[0].chomp
+        if command == 'start' || command == 'stop' || command == 'restart'
+            options[:command] = command
+        else
+            puts opts
+            exit
+        end
+    else
+        puts opts
+        exit
+    end 
+    
 end.parse!
 
 # base thin options...
@@ -40,4 +59,4 @@ else
     thin_opts << " -p 8003"
 end
 
-system "/usr/bin/env thin #{thin_opts} start"
+system "/usr/bin/env thin #{thin_opts} #{options[:command]}"
