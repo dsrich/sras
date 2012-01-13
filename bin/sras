@@ -8,7 +8,7 @@ OptionParser.new do |opts|
     #defaults...
     options[:environment] = 'production'
 
-    opts.banner = 'Usage: sras [options] <start|stop|restart>'
+    opts.banner = 'Usage: sras [options] <start|stop>'
 
     opts.on('-e', '--environment <production|development|test>',
                 'Environment in which to run') do |e|
@@ -34,7 +34,7 @@ OptionParser.new do |opts|
 
     if ARGV.last
         command = ARGV.last.chomp
-        if command == 'start' || command == 'stop' || command == 'restart'
+        if command == 'start' || command == 'stop'
             options[:command] = command
         else
             puts opts
