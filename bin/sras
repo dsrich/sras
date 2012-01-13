@@ -20,7 +20,7 @@ OptionParser.new do |opts|
     end
 
     opts.on('-l', '--log <file>', 'Log file') do |l|
-        options[:log] = l
+        options[:logfile] = l
     end
 
     opts.on('-P', '--pidfile <file>', 'PID file') do |p|
@@ -50,8 +50,8 @@ end.parse!
 thin_opts = "--tag sras -d -R #{::File.dirname(__FILE__)}/../config.ru"
 thin_opts << " -e #{options[:environment]}"
 
-if options[:log]
-    thin_opts << " -l #{options[:log]}"
+if options[:logfile]
+    thin_opts << " -l #{options[:logfile]}"
 else
     thin_opts << " -l log/sras_#{options[:environment]}.log"
 end
