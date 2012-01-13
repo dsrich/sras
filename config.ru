@@ -1,2 +1,2 @@
-require './sras.rb'
+require ::File.dirname(__FILE__) + '/app.rb'
 run SRAS.new
