@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 require 'bundler'
 Bundler.setup
 
@@ -92,5 +90,5 @@ class SRAS < Sinatra::Application
 
 end
 
-require ::File.dirname(__FILE__) + '/helpers/init'
-require ::File.dirname(__FILE__) + '/models/init'
+require ::File.dirname(__FILE__) + '/sras/helpers/init'
+require ::File.dirname(__FILE__) + '/sras/models/init'
