@@ -19,8 +19,12 @@ OptionParser.new do |opts|
         options[:port] = p
     end
 
-    opts.on('-l', '--log <file>', Integer, 'Log file') do |l|
+    opts.on('-l', '--log <file>', 'Log file') do |l|
         options[:log] = l
+    end
+
+    opts.on('-P', '--pidfile <file>', 'PID file') do |p|
+        options[:pidfile] = p
     end
 
     opts.on_tail('-h', '--help', 'Show this message') do
@@ -28,8 +32,8 @@ OptionParser.new do |opts|
         exit
     end
 
-    if ARGV[0]
-        command = ARGV[0].chomp
+    if ARGV.last
+        command = ARGV.last.chomp
         if command == 'start' || command == 'stop' || command == 'restart'
             options[:command] = command
         else
@@ -40,7 +44,6 @@ OptionParser.new do |opts|
         puts opts
         exit
     end 
-    
 end.parse!
 
 # base thin options...
@@ -57,6 +60,12 @@ if options[:port]
     thin_opts << " -p #{options[:port]}"
 else
     thin_opts << " -p 8003"
+end
+
+if options[:pidfile]
+    thin_opts << " -P #{options[:pidfile]}"
+else
+    thin_opts << " -P /tmp/sras_#{options[:environment]}.pid"
 end
 
 system "/usr/bin/env thin #{thin_opts} #{options[:command]}"
