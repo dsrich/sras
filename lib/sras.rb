@@ -1,5 +1,7 @@
-require 'bundler'
-Bundler.setup
+#require 'bundler'
+#Bundler.setup
+
+require 'bundler/setup'
 
 require 'sinatra'
 require 'erb'
