@@ -6,6 +6,10 @@ module Sinatra
         def get_asset_data(asset_id)
             @asset = Asset.get(asset_id)
 
+            if @asset.enabled == false
+                return
+            end
+
             @asset_file = @asset.base_dir + '/' + @asset.sha256[0..2] + '/' + @asset.sha256[3..5] + '/' + @asset.sha256
 
             if File.exists?(@asset_file + '.gz')
