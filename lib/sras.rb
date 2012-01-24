@@ -10,6 +10,7 @@ require 'digest/sha2'
 require 'hpricot'
 
 class SRAS < Sinatra::Application
+    set :views, Proc.new { File.join(root, "sras/views") }
 
     get '/' do
         erb :index
