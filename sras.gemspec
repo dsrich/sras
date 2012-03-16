@@ -12,10 +12,10 @@ Gem::Specification.new do |s|
     s.test_files    = `git ls-files -- test/*`.split("\n")
     s.executables   = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
 
-    s.add_runtime_dependency    'dm-migrations', '1.1.0'
-    s.add_runtime_dependency    'dm-mysql-adapter', '1.1.0'
-    s.add_runtime_dependency    'dm-timestamps', '1.1.0'
-    s.add_runtime_dependency    'dm-types', '1.1.0'
+    s.add_runtime_dependency    'dm-migrations', '1.2.0'
+    s.add_runtime_dependency    'dm-mysql-adapter', '1.2.0'
+    s.add_runtime_dependency    'dm-timestamps', '1.2.0'
+    s.add_runtime_dependency    'dm-types', '1.2.1'
     s.add_runtime_dependency    'hpricot', '0.8.4'
     s.add_runtime_dependency    'sinatra', '1.2.6'
     s.add_runtime_dependency    'thin', '1.2.11'
