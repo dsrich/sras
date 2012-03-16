@@ -1,4 +1,6 @@
 RACK_ENV = ENV['RACK_ENV'] || 'production'
+set :environment, (ENV['RACK_ENV'] || 'production')
+
 @dbms = ENV['DBMS'] || 'mysql'
 
 if File.exists?("#{ROOT}/config/config.yml")

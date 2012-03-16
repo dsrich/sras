@@ -8,7 +8,7 @@ options = {}
 ROOT = ::File.dirname(::File.realdirpath(__FILE__))
 
 # defaults...
-options[:environment] = 'production'
+options[:environment] = (ENV['RACK_ENV']  || 'production')
 options[:config_file] = '/etc/sras/sras.conf'
 
 # look for more appropriate SRAS config file...
