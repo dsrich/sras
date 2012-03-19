@@ -25,11 +25,6 @@ OptionParser.new do |opts|
         options[:config_file] = c
     end
 
-    opts.on('-e', '--environment <production|development|test>',
-                'Environment in which to run') do |e|
-        options[:environment] = e
-    end
-
     opts.on('-h', '--host <hostname|ip_addy>', 'Address to which to bind') do |h|
         options[:host] = h
     end
@@ -72,10 +67,6 @@ else
     warn "Couldn't find SRAS config file.  Exiting."
     exit 1
 end
-
-# base thin options...
-#-d -R #{::File.dirname(__FILE__)}/../config.ru"
-#thin_opts << " -e #{options[:environment]}"
 
 if ! options[:host]
     if @config['sras'][options[:environment]]['host']
