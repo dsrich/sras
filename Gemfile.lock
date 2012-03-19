@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sras (2.1.1.pre.2)
+    sras (2.1.2)
       dm-migrations (= 1.2.0)
       dm-mysql-adapter (= 1.2.0)
       dm-timestamps (= 1.2.0)
