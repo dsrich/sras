@@ -16,8 +16,7 @@ The packages of Ruby shipping with Ubuntu don't include built-in zlib
 support.  I prefer using RVM [ http://rvm.beginrescueend.com/ ]
 anyway.
 
-Built & testing with Ruby v1.9.2.  Tested with Thin, but should also
-work with Passenger.
+Built & testing with Ruby v1.9.2.
 
 Install via: ::
 
