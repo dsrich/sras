@@ -1,5 +1,7 @@
+# this isn't very dry, and really should be a cli option passed from
+# bin/sras ...
 RACK_ENV = ENV['RACK_ENV'] || 'production'
-set :environment, (ENV['RACK_ENV'] || 'production')
+set :environment, RACK_ENV
 
 @dbms = ENV['DBMS'] || 'mysql'
 

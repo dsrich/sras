@@ -8,6 +8,7 @@ options = {}
 ROOT = ::File.dirname(::File.realdirpath(__FILE__))
 
 # defaults...
+# environment really should be a cli option...
 options[:environment] = (ENV['RACK_ENV']  || 'production')
 options[:config_file] = '/etc/sras/sras.conf'
 
