@@ -46,6 +46,10 @@ OptionParser.new do |opts|
         options[:pid_file] = p
     end
 
+    opts.on('-S', '--socket <file>', 'Socket file') do |s|
+        options[:socket] = s
+    end
+
     opts.on_tail('-h', '--help', 'Show this message') do
         puts opts
         exit
@@ -108,7 +112,11 @@ end
 require "#{ROOT}/../lib/sras.rb"
 
 if options[:command] == 'start'
-    server = Thin::Server.new(options[:host], options[:port], SRAS.new)
+    if options[:socket]
+        server = Thin::Server.new(options[:socket], SRAS.new)
+    else
+        server = Thin::Server.new(options[:host], options[:port], SRAS.new)
+    end
     server.log_file = options[:log_file]
     server.pid_file = options[:pid_file]
     server.tag = 'sras'
