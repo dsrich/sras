@@ -108,5 +108,6 @@ if options[:command] == 'start'
     server.log_file = options[:log_file]
     server.pid_file = options[:pid_file]
     server.tag = 'sras'
+    server.daemonize
     server.start
 end
