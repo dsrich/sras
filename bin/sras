@@ -26,6 +26,10 @@ OptionParser.new do |opts|
         options[:config_file] = c
     end
 
+    opts.on('-f', '--foreground', 'Run in foreground') do |f|
+        options[:foreground] = true
+    end
+
     opts.on('-h', '--host <hostname|ip_addy>', 'Address to which to bind') do |h|
         options[:host] = h
     end
@@ -108,6 +112,8 @@ if options[:command] == 'start'
     server.log_file = options[:log_file]
     server.pid_file = options[:pid_file]
     server.tag = 'sras'
-    server.daemonize
+    unless options[:foreground]
+        server.daemonize
+    end
     server.start
 end
