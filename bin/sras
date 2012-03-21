@@ -20,7 +20,7 @@ elsif File.exists?(File.expand_path('~/.srasrc'))
 end
 
 OptionParser.new do |opts|
-    opts.banner = 'Usage: sras [options] <start|stop>'
+    opts.banner = 'Usage: sras [options] start'
 
     opts.on('-c', '--config <file>', 'SRAS config file') do |c|
         options[:config_file] = c
@@ -49,7 +49,7 @@ OptionParser.new do |opts|
 
     if ARGV.last
         command = ARGV.last.chomp
-        if command == 'start' || command == 'stop'
+        if command == 'start'
             options[:command] = command
         else
             puts opts
@@ -102,8 +102,11 @@ if ! options[:pid_file]
 end
 
 require "#{ROOT}/../lib/sras.rb"
-server = Thin::Server.new(options[:host], options[:port], SRAS.new)
-server.log_file = options[:log_file]
-server.pid_file = options[:pid_file]
-server.tag = 'sras'
-server.start
+
+if options[:command] == 'start'
+    server = Thin::Server.new(options[:host], options[:port], SRAS.new)
+    server.log_file = options[:log_file]
+    server.pid_file = options[:pid_file]
+    server.tag = 'sras'
+    server.start
+end
