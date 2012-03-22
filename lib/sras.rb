@@ -1,6 +1,3 @@
-#require 'bundler'
-#Bundler.setup
-
 require 'bundler/setup'
 
 require 'sinatra'
@@ -10,7 +7,12 @@ require 'digest/sha2'
 require 'hpricot'
 
 class SRAS < Sinatra::Application
+    set :environment, RACK_ENV
     set :views, Proc.new { File.join(root, "sras/views") }
+
+    configure :development do
+        DataMapper::Logger.new(STDOUT, :debug)
+    end
 
     get '/' do
         erb :index

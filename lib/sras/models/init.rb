@@ -3,10 +3,6 @@ require 'dm-core'
 require 'dm-types'
 require 'dm-timestamps'
 
-configure :development do
-    DataMapper::Logger.new(STDOUT, :debug)
-end
-
 $default_asset_dir = @config['sras'][RACK_ENV]['default_asset_dir']
 
 DataMapper.setup(:default, {

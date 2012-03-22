@@ -4,20 +4,15 @@ require 'optparse'
 require 'yaml'
 require 'thin'
 
-options = {}
 ROOT = ::File.dirname(::File.realdirpath(__FILE__))
+require "#{ROOT}/../lib/sras/helpers/init.rb"
+
+options = {}
 
 # defaults...
 # environment really should be a cli option...
-options[:environment] = (ENV['RACK_ENV']  || 'production')
-options[:config_file] = '/etc/sras/sras.conf'
-
-# look for more appropriate SRAS config file...
-if File.exists?("#{ROOT}/config/config.yml")
-    options[:config_file] = "#{ROOT}/config/config.yml"
-elsif File.exists?(File.expand_path('~/.srasrc'))
-    options[:config_file] = File.expand_path('~/.srasrc')
-end
+options[:environment] = RACK_ENV
+options[:config_file] = config_file
 
 OptionParser.new do |opts|
     opts.banner = 'Usage: sras [options] start'
