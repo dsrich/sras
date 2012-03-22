@@ -7,11 +7,12 @@ require 'thin'
 ROOT = ::File.dirname(::File.realdirpath(__FILE__))
 require "#{ROOT}/../lib/sras/helpers/init.rb"
 
+@dbms = ENV['DBMS'] || 'mysql'
+
 options = {}
 
 # defaults...
-# environment really should be a cli option...
-options[:environment] = RACK_ENV
+options[:environment] = ENV['RACK_ENV'] || 'production'
 options[:config_file] = config_file
 
 OptionParser.new do |opts|
@@ -19,6 +20,10 @@ OptionParser.new do |opts|
 
     opts.on('-c', '--config <file>', 'SRAS config file') do |c|
         options[:config_file] = c
+    end
+
+    opts.on('-e', '--environment <production|development|testing>', 'Set Rack environment') do |e|
+        options[:environment] = e
     end
 
     opts.on('-f', '--foreground', 'Run in foreground') do |f|
@@ -64,6 +69,8 @@ OptionParser.new do |opts|
     end 
 end.parse!
 
+RACK_ENV = options[:environment]
+
 # load SRAS config file...
 if File.exists?(options[:config_file])
     @config = YAML.load_file(options[:config_file])
@@ -73,34 +80,34 @@ else
 end
 
 if ! options[:host]
-    if @config['sras'][options[:environment]]['host']
-        options[:host] = @config['sras'][options[:environment]]['host']    
+    if @config['sras'][RACK_ENV]['host']
+        options[:host] = @config['sras'][RACK_ENV]['host']    
     else
         options[:host] = '0.0.0.0'
     end
 end
 
 if ! options[:port]
-    if @config['sras'][options[:environment]]['port']
-        options[:port] = @config['sras'][options[:environment]]['port']
+    if @config['sras'][RACK_ENV]['port']
+        options[:port] = @config['sras'][RACK_ENV]['port']
     else
         options[:port] = '8003'
     end
 end
 
 if ! options[:log_file]
-    if @config['sras'][options[:environment]]['log_file']
-        options[:log_file] = @config['sras'][options[:environment]]['log_file']
+    if @config['sras'][RACK_ENV]['log_file']
+        options[:log_file] = @config['sras'][RACK_ENV]['log_file']
     else
-        options[:log_file] = "log/sras_#{options[:environment]}.log"
+        options[:log_file] = "log/sras_#{RACK_ENV}.log"
     end
 end
 
 if ! options[:pid_file]
-    if @config['sras'][options[:environment]]['pid_file']
-        options[:pid_file] = @config['sras'][options[:environment]]['pid_file']
+    if @config['sras'][RACK_ENV]['pid_file']
+        options[:pid_file] = @config['sras'][RACK_ENV]['pid_file']
     else
-        options[:pid_file] = "/tmp/sras_#{options[:environment]}.pid"
+        options[:pid_file] = "/tmp/sras_#{RACK_ENV}.pid"
     end
 end
 
