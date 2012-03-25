@@ -32,4 +32,6 @@ class Asset
     property :created_at, EpochTime
     property :updated_at, EpochTime
     property :enabled, Boolean, :required => true, :default => true
+
+    DataMapper.finalize
 end
