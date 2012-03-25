@@ -13,7 +13,7 @@ options = {}
 
 # defaults...
 options[:environment] = ENV['RACK_ENV'] || 'production'
-options[:config_file] = config_file
+options[:config_file] = ''
 
 OptionParser.new do |opts|
     opts.banner = 'Usage: sras [options] start'
@@ -71,13 +71,7 @@ end.parse!
 
 RACK_ENV = options[:environment]
 
-# load SRAS config file...
-if File.exists?(options[:config_file])
-    @config = YAML.load_file(options[:config_file])
-else
-    warn "Couldn't find SRAS config file.  Exiting."
-    exit 1
-end
+@config = load_config_file(options[:config_file])
 
 if ! options[:host]
     if @config['sras'][RACK_ENV]['host']
