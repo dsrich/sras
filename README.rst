@@ -70,7 +70,7 @@ table, and have a file contain the asset data on disk.
 
 To test retrieval of that asset: ::
 
-   $ curl -X GET \
+   $ curl -X GET -w '%{http_code}\n' \
         http://yourserver.example.com:8003/assets/0193663d-44e4-4e6e-9a1c-8dd2febc5fc5/data 
 
 
