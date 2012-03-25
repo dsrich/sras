@@ -7,6 +7,7 @@ require 'digest/sha2'
 require 'hpricot'
 
 class SRAS < Sinatra::Application
+    set :environment, RACK_ENV.to_sym
     set :views, Proc.new { File.join(root, "sras/views") }
 
     get '/' do

@@ -1,11 +1,8 @@
-require 'sinatra'
 require 'dm-core'
 require 'dm-types'
 require 'dm-timestamps'
 
-set :environment, RACK_ENV.to_sym
-
-configure :development do
+if RACK_ENV == 'development'
     DataMapper::Logger.new(STDOUT, :debug)
 end
 
