@@ -13,4 +13,4 @@ CREATE TABLE `assets` (
   PRIMARY KEY (`id`),
   KEY `assets_id_sha256` (`id`,`sha256`),
   KEY `assets_sha256` (`sha256`)
-) ENGINE=MyISAM DEFAULT CHARSET=ascii;
+) DEFAULT CHARSET=utf8;
