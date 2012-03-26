@@ -1,3 +1,11 @@
+2.1.5
+    - escape asset name and description.  previously assets with
+      certain values in the name and/or description fields would
+      trigger exceptions in OpenSim.
+    - when starting sras in background print a message instead of
+      being silent
+    - abort if certain files aren't writable
+
 2.1.4
     - fix for DataMapper 1.2.0 compatibility.  fixes exceptions on
       POST.
