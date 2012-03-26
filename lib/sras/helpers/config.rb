@@ -2,7 +2,7 @@
 # load config file
 #
 
-def load_config_file(config_file='')
+def load_config_file(config_file=nil)
     if config_file.nil?
         if File.exists?("#{ROOT}/config/config.yml")
             config_file = "#{ROOT}/config/config.yml"
