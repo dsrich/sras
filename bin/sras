@@ -113,6 +113,7 @@ if options[:command] == 'start'
     server.pid_file = options[:pid_file]
     server.tag = 'sras'
     unless options[:foreground]
+        warn "Starting sras on #{options[:host]} port TCP #{options[:port]}"
         server.daemonize
     end
     server.start
