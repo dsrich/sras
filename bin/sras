@@ -103,8 +103,11 @@ end
 
 require "#{ROOT}/../lib/sras.rb"
 
-unless File.writable?($default_asset_dir)
-    abort "Oops.  #{$default_asset_dir} isn't writable.  Exiting."
+# abort if default asset dir, log file, or pid file aren't writable...
+[ $default_asset_dir, options[:log_file], options[:pid_file] ].each do |file|
+    if File.exists?(file) && ! File.writable?(file)
+        abort "Oops.  File #{file} isn't writable.  Exiting."
+    end      
 end
 
 if options[:command] == 'start'
