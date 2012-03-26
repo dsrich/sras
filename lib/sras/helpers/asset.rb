@@ -3,6 +3,8 @@ require 'sinatra/base'
 module Sinatra
     module AssetHelper
 
+        include Rack::Utils
+
         def get_asset_data(asset_id)
             @asset = Asset.get(asset_id)
 

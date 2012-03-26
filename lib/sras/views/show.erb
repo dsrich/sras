@@ -5,8 +5,8 @@
     <Guid><%= @asset.id %></Guid> 
   </FullID> 
   <ID><%= @asset.id %></ID> 
-  <Name><%= @asset.name %></Name> 
-  <Description><%= @asset.description %></Description> 
+  <Name><%= escape_html @asset.name %></Name> 
+  <Description><%= escape_html @asset.description %></Description> 
   <Type><%= @asset.asset_type %></Type> 
   <Local><%= @asset.local %></Local> 
   <Temporary><%= @asset.temporary %></Temporary> 
