@@ -103,6 +103,10 @@ end
 
 require "#{ROOT}/../lib/sras.rb"
 
+unless File.writable?($default_asset_dir)
+    abort "Oops.  #{$default_asset_dir} isn't writable.  Exiting."
+end
+
 if options[:command] == 'start'
     if options[:socket]
         server = Thin::Server.new(options[:socket], SRAS.new)
