@@ -11,10 +11,6 @@ require "#{ROOT}/../lib/sras/helpers/init.rb"
 
 options = {}
 
-# defaults...
-options[:environment] = ENV['RACK_ENV'] || 'production'
-options[:config_file] = ''
-
 OptionParser.new do |opts|
     opts.banner = 'Usage: sras [options] start'
 
@@ -69,7 +65,7 @@ OptionParser.new do |opts|
     end 
 end.parse!
 
-RACK_ENV = options[:environment]
+RACK_ENV = options[:environment] || ENV['RACK_ENV'] || 'production'
 
 @config = load_config_file(options[:config_file])
 

@@ -2,8 +2,8 @@
 # load config file
 #
 
-def load_config_file(config_file)
-    unless File.exists?(config_file)
+def load_config_file(config_file='')
+    if config_file.nil?
         if File.exists?("#{ROOT}/config/config.yml")
             config_file = "#{ROOT}/config/config.yml"
         elsif File.exists?(File.expand_path('~/.srasrc'))
@@ -16,5 +16,9 @@ def load_config_file(config_file)
         end
     end
 
-    return YAML.load_file(config_file)
+    begin
+        return YAML.load_file(config_file) 
+    rescue
+        abort "Oops.  Couldn't open config file #{config_file} ...  Aborting."
+    end
 end
