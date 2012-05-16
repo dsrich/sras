@@ -46,6 +46,11 @@ OptionParser.new do |opts|
         options[:socket] = s
     end
 
+    opts.on_tail('--version', 'Print version') do |v|
+        puts SRAS::VERSION
+        exit
+    end
+
     opts.on_tail('-h', '--help', 'Show this message') do
         puts opts
         exit
@@ -55,9 +60,6 @@ OptionParser.new do |opts|
         command = ARGV.last.chomp
         if command == 'start'
             options[:command] = command
-        else
-            puts opts
-            exit
         end
     else
         puts opts

@@ -1,6 +1,8 @@
+require 'lib/sras/helpers/version.rb'
+
 Gem::Specification.new do |s|
     s.name          = 'sras'
-    s.version       = '2.1.5'
+    s.version       = SRAS::VERSION
     s.summary       = 'Simple Ruby Asset Server'
     s.description   = 'Asset server for use with OpenSimulator'
     s.authors       = 'Dave Coyle'
