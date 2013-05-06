@@ -78,11 +78,11 @@ Mailing List
 ------------
 
 For SRAS-related announcements and discussion feel free to join the
-low-volume mailing list.  To join the list send an email to
-majordomo@sdf.org with the following body (no subject required):
+low-volume mailing list.  You can join the list by submitting the form
+at https://lists.sourceforge.net/lists/listinfo/sras-list
 
-    subscribe sras-l
+Mailing list members can email the list via
+sras-list@lists.sourceforge.net
 
-Mailing list members can email the list via sras-l@sdf.org
-
-List archives can be found at http://lists.coyled.com/sras-l/archives/
+List archives can be found at
+http://sourceforge.net/mailarchive/forum.php?forum_name=sras-list
