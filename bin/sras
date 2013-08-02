@@ -47,7 +47,7 @@ OptionParser.new do |opts|
     end
 
     opts.on_tail('--version', 'Print version') do |v|
-        puts SRAS::VERSION
+        puts Version
         exit
     end
 
