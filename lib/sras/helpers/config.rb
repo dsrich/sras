@@ -8,7 +8,7 @@ def load_config_file(config_file=nil)
             config_file = "#{ROOT}/config/config.yml"
         elsif File.exists?(File.expand_path('~/.srasrc'))
             config_file = File.expand_path('~/.srasrc')
-        elsif File.exists('/etc/sras/sras.conf')
+        elsif File.exists?('/etc/sras/sras.conf')
             config_file = '/etc/sras/sras.conf'
         else
             warn "Couldn't find SRAS config file.  Exiting."
