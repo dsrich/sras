@@ -44,37 +44,19 @@ class SRAS < Sinatra::Application
         erb :create
     end
 
-    get '/assets/:asset_id' do
+    get '/assets/:asset_id/?:view?' do
         if @asset = Asset.get(params[:asset_id])
             if @asset_data = get_asset_data(params[:asset_id])
-                content_type get_asset_type(@asset.asset_type)
-                erb :show
-            else
-                not_found
-            end
-        else
-            not_found
-        end
-    end
-
-    get '/assets/:asset_id/data' do
-        if @asset = Asset.get(params[:asset_id])
-            if @asset_data = get_asset_data(params[:asset_id])
-                content_type 'application/octet-stream'
-                erb :data
-            else
-                not_found
-            end
-        else
-            not_found
-        end
-    end
-
-    get '/assets/:asset_id/metadata' do
-        if @asset = Asset.get(params[:asset_id])
-            if @asset_data = get_asset_data(params[:asset_id])
-                content_type get_asset_type(@asset.asset_type)
-                erb :metadata
+                if params[:view] == 'data'
+                    content_type 'application/octet-stream'
+                    erb :data
+                elsif params[:view] == 'metadata'
+                    content_type get_asset_type(@asset.asset_type)
+                    erb :metadata
+                else
+                    content_type get_asset_type(@asset.asset_type)
+                    erb :show
+                end
             else
                 not_found
             end
