@@ -15,23 +15,29 @@
 #  KEY `assets_sha256` (`sha256`)
 #) ENGINE=MyISAM DEFAULT CHARSET=ascii;
 
-class Asset
-    include DataMapper::Resource
-    property :id, String, :length => 36, :required => true,
-                :key => true, :index => :id_sha256
-    property :asset_type, Integer, :required => true,
-                :min => 0, :max => 99
-    property :sha256, String, :length => 64, :required => true,
-                :index => [ :sha256, :id_sha256 ]
-    property :name, String, :length => 64
-    property :description, String, :length => 64
-    property :local, Boolean
-    property :temporary, Boolean
-    property :base_dir, String, :length => 64, :required => true,
-                :default => $default_asset_dir
-    property :created_at, EpochTime
-    property :updated_at, EpochTime
-    property :enabled, Boolean, :required => true, :default => true
+module SRAS
+    class Asset
+        include DataMapper::Resource
 
-    DataMapper.finalize
+        # table name...
+        storage_names[:default] = 'assets'
+
+        property :id, String, :length => 36, :required => true,
+                    :key => true, :index => :id_sha256
+        property :asset_type, Integer, :required => true,
+                    :min => 0, :max => 99
+        property :sha256, String, :length => 64, :required => true,
+                    :index => [ :sha256, :id_sha256 ]
+        property :name, String, :length => 64
+        property :description, String, :length => 64
+        property :local, Boolean
+        property :temporary, Boolean
+        property :base_dir, String, :length => 64, :required => true,
+                    :default => Config.default_asset_dir
+        property :created_at, EpochTime
+        property :updated_at, EpochTime
+        property :enabled, Boolean, :required => true, :default => true
+
+        DataMapper.finalize
+    end
 end

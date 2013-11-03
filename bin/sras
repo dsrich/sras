@@ -3,11 +3,7 @@
 require 'optparse'
 require 'yaml'
 require 'thin'
-
-ROOT = ::File.dirname(::File.realdirpath(__FILE__))
-require "#{ROOT}/../lib/sras/helpers/init.rb"
-
-@dbms = ENV['DBMS'] || 'mysql'
+require './lib/sras'
 
 options = {}
 
@@ -47,7 +43,7 @@ OptionParser.new do |opts|
     end
 
     opts.on_tail('--version', 'Print version') do |v|
-        puts Version
+        puts SRAS::Version
         exit
     end
 
@@ -69,60 +65,44 @@ end.parse!
 
 RACK_ENV = options[:environment] || ENV['RACK_ENV'] || 'production'
 
-@config = load_config_file(options[:config_file])
-
-if ! options[:host]
-    if @config['sras'][RACK_ENV]['host']
-        options[:host] = @config['sras'][RACK_ENV]['host']    
-    else
-        options[:host] = '0.0.0.0'
-    end
+if options[:config_file]
+    ENV['SRAS_CONFIG_FILE'] = options[:config_file]
 end
 
-if ! options[:port]
-    if @config['sras'][RACK_ENV]['port']
-        options[:port] = @config['sras'][RACK_ENV]['port']
-    else
-        options[:port] = '8003'
-    end
+if options[:host]
+    ENV['SRAS_BIND_HOST'] = options[:host]
 end
 
-if ! options[:log_file]
-    if @config['sras'][RACK_ENV]['log_file']
-        options[:log_file] = @config['sras'][RACK_ENV]['log_file']
-    else
-        options[:log_file] = "log/sras_#{RACK_ENV}.log"
-    end
+if options[:port]
+    ENV['SRAS_BIND_PORT'] = options[:port]
 end
 
-if ! options[:pid_file]
-    if @config['sras'][RACK_ENV]['pid_file']
-        options[:pid_file] = @config['sras'][RACK_ENV]['pid_file']
-    else
-        options[:pid_file] = "/tmp/sras_#{RACK_ENV}.pid"
-    end
+if options[:log_file]
+    ENV['SRAS_LOG_FILE'] = options[:log_file]
 end
 
-require "#{ROOT}/../lib/sras.rb"
+if options[:pid_file]
+    ENV['SRAS_PID_FILE'] = options[:pid_file]
+end
 
+if options[:socket]
+    ENV['SRAS_SOCKET_FILE'] = options[:socket]
+end
+
+## TOFIX
 # abort if default asset dir, log file, or pid file aren't writable...
-[ $default_asset_dir, options[:log_file], options[:pid_file] ].each do |file|
-    if File.exists?(file) && ! File.writable?(file)
-        abort "Oops.  File #{file} isn't writable.  Exiting."
-    end      
-end
 
 if options[:command] == 'start'
-    if options[:socket]
-        server = Thin::Server.new(options[:socket], SRAS.new)
+    if SRAS::Config.socket_file
+        server = Thin::Server.new(SRAS::Config.socket_file, SRAS::Server.new)
     else
-        server = Thin::Server.new(options[:host], options[:port], SRAS.new)
+        server = Thin::Server.new(SRAS::Config.host, SRAS::Config.port, SRAS::Server.new)
     end
-    server.log_file = options[:log_file]
-    server.pid_file = options[:pid_file]
+    server.log_file = SRAS::Config.log_file
+    server.pid_file = SRAS::Config.pid_file
     server.tag = 'sras'
     unless options[:foreground]
-        warn "Starting sras on #{options[:host]} port TCP #{options[:port]}"
+        warn "Starting sras on #{SRAS::Config.host} port TCP #{SRAS::Config.port}"
         server.daemonize
     end
     server.start

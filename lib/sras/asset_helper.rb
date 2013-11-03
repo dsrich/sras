@@ -1,53 +1,55 @@
-require 'sinatra/base'
+require 'zlib'
 
-module Sinatra
+module SRAS
     module AssetHelper
+        def self.get_asset_data(asset_id)
+            asset = Asset.get(asset_id)
 
-        include Rack::Utils
-
-        def get_asset_data(asset_id)
-            @asset = Asset.get(asset_id)
-
-            if @asset.enabled == false
+            if asset.enabled == false
                 return
             end
 
-            @asset_file = @asset.base_dir + '/' + @asset.sha256[0..2] + '/' + @asset.sha256[3..5] + '/' + @asset.sha256
+            asset_file = asset.base_dir + '/' + asset.sha256[0..2] + '/' + asset.sha256[3..5] + '/' + asset.sha256
+            asset_data = ''
 
-            if File.exists?(@asset_file + '.gz')
-                Zlib::GzipReader.open(@asset_file + '.gz') do |file|
-                    @asset_data = file.read
+            if File.exists?(asset_file + '.gz')
+                Zlib::GzipReader.open(asset_file + '.gz') do |file|
+                    asset_data = file.read
                 end
-            elsif File.exists?(@asset_file)
-                File.open(@asset_file) do |file|
-                    @asset_data = file.read
+            elsif File.exists?(asset_file)
+                File.open(asset_file) do |file|
+                    asset_data = file.read
                 end
             end
 
-            return @asset_data
+            asset_data
         end
 
-        def write_asset_data()
-            @asset_file_dir = @asset.base_dir + '/' + @asset.sha256[0..2] + '/' + @asset.sha256[3..5]
-            @asset_file = @asset_file_dir + '/' + @asset.sha256
+        def self.write_asset_data(asset, asset_data)
+            asset_file_dir = asset.base_dir + '/' + asset.sha256[0..2] + '/' + asset.sha256[3..5]
+            asset_file = asset_file_dir + '/' + asset.sha256
 
             # see if asset file with this hash already exists.  if it
             # does, then we don't need to overwrite it with identical
             # data...
-            if File.exists?(@asset_file + '.gz') || File.exists?(@asset_file)
+            if File.exists?(asset_file + '.gz') || File.exists?(asset_file)
                 return
             end 
 
             # mkdirs if necessary...
-            FileUtils.mkpath @asset_file_dir
+            FileUtils.mkpath asset_file_dir
 
             # write the data to a file, gzip'd...
-            Zlib::GzipWriter.open(@asset_file + '.gz') do |file|
-                file.write @asset_data
+            Zlib::GzipWriter.open(asset_file + '.gz') do |file|
+                file.write asset_data
                 file.close
             end
         end
 
+
+        # Below for reference; flags aren't used for anything in SRAS
+        # presently, they're just stored on creation.
+        #
         # Flags added to opensim in 9b22393.  Current values (from
         # OpenSim/Framework/AssetBase.cs):
         #
@@ -59,17 +61,12 @@ module Sinatra
         #       Rewritable = 2,
         #       Collectable = 4
         #   }
-        @flags = {
-            'Normal'        => 0,
-            'Maptile'       => 1,
-            'Rewritable'    => 2,
-            'Collectable'   => 4
-        }
+
 
         # usage:
         #   asset_type = get_asset_type('image/tga')
         #   asset_type = get_asset_type(12)
-        def get_asset_type(request)
+        def self.get_asset_type(request)
 
             # default            'application/octet-stream'
             asset_type = {
@@ -99,11 +96,6 @@ module Sinatra
             end
 
             return response
-
         end
-
     end
-
-    helpers AssetHelper
-
 end

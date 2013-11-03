@@ -1,8 +1,8 @@
-require ::File.dirname(__FILE__) + '/lib/sras/helpers/version.rb'
+require ::File.dirname(__FILE__) + '/lib/sras/version.rb'
 
 Gem::Specification.new do |s|
     s.name          = 'sras'
-    s.version       = Version
+    s.version       = SRAS::Version
     s.summary       = 'Simple Ruby Asset Server'
     s.description   = 'Asset server for use with OpenSimulator'
     s.authors       = 'Dave Coyle'

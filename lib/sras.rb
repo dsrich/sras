@@ -1,77 +1,79 @@
 require 'bundler/setup'
 
-require 'sinatra'
+require 'sinatra/base'
 require 'erb'
 require 'base64'
 require 'digest/sha2'
 require 'hpricot'
 
-class SRAS < Sinatra::Application
-    set :environment, RACK_ENV.to_sym
-    set :views, Proc.new { File.join(root, "sras/views") }
+require 'sras/config'
+require 'sras/asset_helper'
+require 'sras/models/init'
 
-    get '/' do
-        erb :index
-    end
+module SRAS
+    class Server < Sinatra::Base
+        set :environment, ENV['RACK_ENV']
+        set :views, Proc.new { File.join(root, "sras/views") }
 
-    get '/assets/?' do
-        erb :index
-    end
-
-    post '/assets/?' do
-        content_type 'application/xml'
-
-        doc = Hpricot.XML(request.body.read)
-
-        # 404 if the ID already exists.  need to revisit this.
-        if Asset.get((doc/:ID).text)
-            not_found
+        get '/' do
+            erb :index
         end
 
-        @asset_data = Base64.decode64((doc/:Data).text.chomp)
-        @asset_hash = Digest::SHA256.digest(@asset_data).unpack('H*')[0].upcase
-        @asset = Asset.new(
-            :id             => (doc/:ID).text,
-            :asset_type     => (doc/:Type).text,
-            :sha256         => @asset_hash,
-            :name           => (doc/:Name).text,
-            :description    => (doc/:Description).text,
-            :local          => (doc/:Local).text,
-            :temporary      => (doc/:Temporary).text
-        )
-        write_asset_data
-        @asset.save
-        erb :create
-    end
+        get '/assets/?' do
+            erb :index
+        end
 
-    get '/assets/:asset_id/?:view?' do
-        if @asset = Asset.get(params[:asset_id])
-            if @asset_data = get_asset_data(params[:asset_id])
-                if params[:view] == 'data'
-                    content_type 'application/octet-stream'
-                    erb :data
-                elsif params[:view] == 'metadata'
-                    content_type get_asset_type(@asset.asset_type)
-                    erb :metadata
+        post '/assets/?' do
+            content_type 'application/xml'
+
+            doc = Hpricot.XML(request.body.read)
+
+            # 404 if the ID already exists.  need to revisit this.
+            if Asset.get((doc/:ID).text)
+                not_found
+            end
+
+            @asset_data = Base64.decode64((doc/:Data).text.chomp)
+            asset_hash = Digest::SHA256.digest(@asset_data).unpack('H*')[0].upcase
+            @asset = Asset.new(
+                :id             => (doc/:ID).text,
+                :asset_type     => (doc/:Type).text,
+                :sha256         => asset_hash,
+                :name           => (doc/:Name).text,
+                :description    => (doc/:Description).text,
+                :local          => (doc/:Local).text,
+                :temporary      => (doc/:Temporary).text
+            )
+            AssetHelper.write_asset_data(@asset, @asset_data)
+            @asset.save
+            erb :create
+        end
+
+        get '/assets/:asset_id/?:view?' do
+            if @asset = Asset.get(params[:asset_id])
+                if @asset_data = AssetHelper.get_asset_data(params[:asset_id])
+                    if params[:view] == 'data'
+                        content_type 'application/octet-stream'
+                        erb :data
+                    elsif params[:view] == 'metadata'
+                        content_type AssetHelper.get_asset_type(@asset.asset_type)
+                        erb :metadata
+                    else
+                        content_type AssetHelper.get_asset_type(@asset.asset_type)
+                        erb :show
+                    end
                 else
-                    content_type get_asset_type(@asset.asset_type)
-                    erb :show
+                    not_found
                 end
             else
                 not_found
             end
-        else
+        end
+
+        delete '/*' do
+            # we don't trust anyone to delete assets.  opensim complains if it
+            # gets 403s, so return a 404 instead...
             not_found
         end
     end
-
-    delete '/*' do
-        # we don't trust anyone to delete assets.  opensim complains if it
-        # gets 403s, so return a 404 instead...
-        not_found
-    end
-
 end
-
-require ::File.dirname(__FILE__) + '/sras/helpers/init'
-require ::File.dirname(__FILE__) + '/sras/models/init'

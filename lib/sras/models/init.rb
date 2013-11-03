@@ -2,18 +2,18 @@ require 'dm-core'
 require 'dm-types'
 require 'dm-timestamps'
 
-if RACK_ENV == 'development'
-    DataMapper::Logger.new(STDOUT, :debug)
+module SRAS
+    if ENV['RACK_ENV'] == 'development'
+        DataMapper::Logger.new(STDOUT, :debug)
+    end
+
+    DataMapper.setup(:default, {
+        :adapter    => 'mysql',
+        :host       => Config.db_host,
+        :username   => Config.username,
+        :password   => Config.password,
+        :database   => Config.database
+    })
 end
-
-$default_asset_dir = @config['sras'][RACK_ENV]['default_asset_dir']
-
-DataMapper.setup(:default, {
-    :adapter    => @config[@dbms][RACK_ENV]['adapter'],
-    :host       => @config[@dbms][RACK_ENV]['host'],
-    :username   => @config[@dbms][RACK_ENV]['username'],
-    :password   => @config[@dbms][RACK_ENV]['password'],
-    :database   => @config[@dbms][RACK_ENV]['database']
-})
 
 require ::File.dirname(__FILE__) + '/asset'
