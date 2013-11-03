@@ -18,9 +18,9 @@ Gem::Specification.new do |s|
     s.add_runtime_dependency    'dm-migrations', '1.2.0'
     s.add_runtime_dependency    'dm-mysql-adapter', '1.2.0'
     s.add_runtime_dependency    'dm-timestamps', '1.2.0'
-    s.add_runtime_dependency    'dm-types', '1.2.1'
-    s.add_runtime_dependency    'hpricot', '0.8.4'
+    s.add_runtime_dependency    'dm-types', '1.2.2'
+    s.add_runtime_dependency    'hpricot', '0.8.6'
     s.add_runtime_dependency    'sinatra', '1.4.3'
-    s.add_runtime_dependency    'thin', '1.2.11'
-    s.add_runtime_dependency    'rake', '0.9.2.2'
+    s.add_runtime_dependency    'thin', '1.6.1'
+    s.add_runtime_dependency    'rake', '10.1.0'
 end
