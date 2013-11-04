@@ -74,7 +74,7 @@ if options[:host]
 end
 
 if options[:port]
-    ENV['SRAS_BIND_PORT'] = options[:port]
+    ENV['SRAS_BIND_PORT'] = options[:port].to_s
 end
 
 if options[:log_file]
