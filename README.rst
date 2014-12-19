@@ -1,6 +1,23 @@
 SRAS -- An Asset Server for OpenSimulator
 =========================================
 
+Notice
+------
+
+Hi.  I haven't used OpenSim for over 3 years, and I'm unlikely to update
+SRAS in the future, so rather than keep it lingering as a project of
+unknown compatibility with current versions of OpenSim I'm just going to
+officially declare SRAS abandonware.
+
+I wrote the first version in an afternoon back in 2010, and it was only
+supposed to be a stop-gap measure for "2 or 3 weeks".  Hopefully today
+there are better, more up-to-date options available to you.
+
+Thanks for your support.
+
+-coyled 2014-12-18
+
+
 Features
 --------
 
