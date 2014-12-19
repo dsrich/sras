@@ -1,7 +1,7 @@
 SRAS -- An Asset Server for OpenSimulator
 =========================================
 
-Notice
+NOTICE
 ------
 
 Hi.  I haven't used OpenSim for over 3 years, and I'm unlikely to update
