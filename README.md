@@ -35,7 +35,7 @@ anyway.
 
 Built & tested with Ruby v1.9.2.
 
-Install via: ::
+Install via:
 
     $ gem install sras
 
@@ -61,7 +61,7 @@ then copy the following text into ``/etc/sras/sras.conf`` or
 Running
 -------
 
-Then just: ::
+Then just:
 
     $ sras start
 
@@ -69,7 +69,7 @@ to start a single instance.  In a production environment you would
 likely want to run several instances behind a reverse proxy like
 Nginx.
 
-To see additional options: ::
+To see additional options:
 
     $ sras --help
 
@@ -77,7 +77,7 @@ To see additional options: ::
 Testing
 -------
 
-To test asset creation: ::
+To test asset creation:
 
     $ curl -d @test/test.asset -X POST -w '%{http_code}\n' \
         http://yourserver.example.com:8003/assets/
@@ -85,9 +85,9 @@ To test asset creation: ::
 You should get a 200 HTTP response, have an entry in your assets
 table, and have a file contain the asset data on disk.
 
-To test retrieval of that asset: ::
+To test retrieval of that asset:
 
-   $ curl -X GET -w '%{http_code}\n' \
+    $ curl -X GET -w '%{http_code}\n' \
         http://yourserver.example.com:8003/assets/0193663d-44e4-4e6e-9a1c-8dd2febc5fc5/data 
 
 
