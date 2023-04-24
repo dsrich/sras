@@ -9,7 +9,7 @@ edition = "2021"
 axum = { version = "0.6", features =  [ "headers" ] }
 axum-server = { version = "0.4", features = [ "tls-rustls" ] }
 rustls = "0.21"
-escape = { path = "../escape" }
+escape = { path = "./escape" }
 mysql = { version = "23.0", default-features = false, features = ["minimal"] }
 
 [profile.dev]
@@ -24,13 +24,3 @@ lto = true          # Enable Link Time Optimization
 codegen-units = 1   # Reduce number of codegen units to increase optimizations.
 panic = "abort"     # Abort on panic
 strip = true        # Automatically strip symbols from the binary.
-
-[alias]
-b = "build"
-c = "check"
-d = "doc"
-t = "test"
-r = "run --release"
-
-[future-incompat-report]
-frequency = 'always'

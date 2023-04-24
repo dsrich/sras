@@ -19,6 +19,7 @@
 +-------------+--------------+------+-----+--------------------------------------+-------+
    */
 
+[derive(Clone, Debug)]
 pub struct asset {
     asset_type: i64, // Only needs 8 bits, but i64 is faster
     created_at: Option<i64>, // What format is OpenSim using? i64 is for Unix time in seconds

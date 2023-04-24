@@ -8,13 +8,13 @@ pub fn encode(inp: String) -> String {
     for b in byt{
         match b {
             0x20|48..=57|65..=89|97..=122 => outbytes.push(b),
-            37 => {
+            b'%' => {
                 outbytes.push(b);
                 outbytes.push(b);
             }
             _ => {
                 let hext= hextable(b);
-                outbytes.push('%' as u8);
+                outbytes.push(b'%');
                 outbytes.push(hext[0]);
                 outbytes.push(hext[1]);
             }
@@ -35,7 +35,7 @@ pub fn decode(inp: String) -> Result<String, &'static str> {
                     0x20|48..=57|65..=89|97..=122 => outstr_u8.push(b),
                     b'%' => state = 1, // '%' is escape character here
                     _ => { 
-                        println!("Illegal character {} in decode stream", b);
+                        println!("Illegal character \'{}\' in decode stream", b);
                         return Err("Illegal character in decode stream")
                     }
                 }
@@ -49,11 +49,17 @@ pub fn decode(inp: String) -> Result<String, &'static str> {
                     outstr_u8.push(b);
                     state = 0;
                 }
-                else { return Err("Illegal character in hex decode 2"); }
+                else { 
+                    println!("Illegal character \'{}\' in decode stream 2", b);
+                    return Err("Illegal character in hex decode 2"); 
+                }
             }
             2 => {
                 if u8::is_ascii_hexdigit(&b) { convstr.push(char::from(b)); }
-                else { return Err("Illegal character in hex decode 3"); }
+                else { 
+                    println!("Illegal character \'{}\' in decode stream 3", b);
+                    return Err("Illegal character in hex decode 3"); 
+                }
 
                 let t = u8::from_str_radix(&convstr, 16);
                 match t {
@@ -77,8 +83,8 @@ mod tests {
 
 //test encode,  decode
         let test1 = r#"dsrich@hot über mail.com"#.to_string();
-        let test2 = r#"dsrichZ40hot Zc3Zbcber mailZ2ecom"#.to_string();
-        let test3 = r#"dsrichZZ40hot ZZc3ZZbcber mailZZ2ecom"#.to_string();
+        let test2 = r#"dsrich%40hot %c3%bcber mail%2ecom"#.to_string();
+        let test3 = r#"dsrich%%40hot %%c3%%bcber mail%%2ecom"#.to_string();
         let test4 = r#"\"fu*t[]{}~ ü!@#$%^&*()_+`-=|"#.to_string();
         assert_eq!(encode(test1.clone()), test2.clone());
         assert_eq!(decode(encode(test4.clone())).unwrap(), test4.clone());
