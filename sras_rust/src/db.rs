@@ -30,10 +30,10 @@ static TEMPORARY: i8 = 2;
 static ENABLED: i8 = 4;
 static FILESTORE: i8 = 8;
 // And in for false
-static NOTLOCAL: i8 = 254;
-static NOTTEMPORARY: i8 = 253;
-static NOTENABLED: i8 = 251;
-static NOTFILESTORE: i8 = 247;
+static NOTLOCAL: i8 = 126;
+static NOTTEMPORARY: i8 = 125;
+static NOTENABLED: i8 = 123;
+static NOTFILESTORE: i8 = 119;
 
 // OpenSim assets table:
 /*
@@ -54,16 +54,17 @@ static NOTFILESTORE: i8 = 247;
 +-------------+--------------+------+-----+--------------------------------------+-------+
 */
 
-#[derive(Clone, Debug, Serialize, Deserialize)]
-struct asset_sql {
+#[derive(Clone, Debug, Serialize, Deserialize, Default)]
+struct AssetSql {
+
+    id: String,  // Do we want to parse it as a UUID? Any reason to?
+    sha256: String,
+    packed: String,
+/* 
     asset_type: i64, // Only needs 8 bits, but i64 is faster
     created_at: Option<i64>, // What format is OpenSim using? i64 is for Unix time in seconds
     updated_at: Option<i64>,
     asset_flags: i64,
-    id: String,  // Do we want to parse it as a UUID? Any reason to?
-    sha256: String,
-    strings: String,
-/* 
     name: String,
     descripion: String,
     base_dir: String, // Allows split file structure
@@ -81,14 +82,18 @@ struct asset_sql {
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize)]
-struct asset_str {
+struct AssetStr {
+    asset_type: i64, // Only needs 8 bits, but i64 is faster
+    created_at: Option<i64>, // What format is OpenSim using? i64 is for Unix time in seconds
+    updated_at: Option<i64>,
+    asset_flags: i64,
     name: String,
     description: String,
     base_dir: String,
     creator_id: String,
 }
-#[derive(Clone, Debug, Serialize, Deserialize)]
-pub struct asset {
+#[derive(Clone, Debug, Serialize, Deserialize, Default)]
+pub struct Asset {
     asset_type: i64, // Only needs 8 bits, but i64 is faster
     created_at: Option<i64>, // What format is OpenSim using? i64 is for Unix time in seconds
     updated_at: Option<i64>,
@@ -96,7 +101,7 @@ pub struct asset {
     id: String,  // Do we want to parse it as a UUID? Any reason to?
     sha256: String,
     name: String,
-    descripion: String,
+    description: String,
     base_dir: String, // Allows split file structure
     creator_id: String,
     local: bool, // bools & LOCAL != 0
@@ -107,24 +112,55 @@ pub struct asset {
     asset: Vec<u8>,
 }
 
-pub fn unpack_sql(inp: asset_sql) -> asset {
-    let mut outp: asset;
-    outp.asset_type = inp.asset_type;
-    outp.created_at = inp.created_at;
-    outp.updated_at = inp.updated_at;
+fn new_asset() -> Asset {
+    Asset {
+        created_at: None,
+        updated_at: None,
+        asset_flags: 0,
+        asset_type: 0,
+        id: "".to_string(),
+        sha256: "".to_string(),
+        name: "".to_string(),
+        description: "".to_string(),
+        base_dir: "".to_string(),
+        creator_id: "".to_string(),
+        local: false,
+        temporary: false,
+        enabled: true,
+        file_store: false,
+        asset: vec![],
+    }
+}
+
+fn new_asset_sql() -> AssetSql {
+    AssetSql{
+        id: "".to_string(),
+        sha256: "".to_string(),
+        packed: "".to_string(),
+        bools: ENABLED,
+        asset: None,
+    }
+}
+
+fn unpack_sql(inp: AssetSql) -> Asset {
+    let mut outp = new_asset();
     outp.id = inp.id;
     outp.sha256 = inp.sha256;
-    let inpstr: asset_str = serde_json::from_str(&inp.strings)
+    let inpstr: AssetStr = serde_json::from_str(&inp.packed)
         .expect("Failed to parse packed strings JSON from database");
     outp.name = inpstr.name;
-    outp.descripion = inpstr.description;
+    outp.description = inpstr.description;
     outp.base_dir = inpstr.base_dir;
     outp.creator_id = inpstr.creator_id;
+    outp.asset_type = inpstr.asset_type;
+    outp.created_at = inpstr.created_at;
+    outp.updated_at = inpstr.updated_at;
     outp.local = (inp.bools & LOCAL) != 0;
     outp.temporary = (inp.bools & TEMPORARY) != 0;
     outp.enabled = (inp.bools & ENABLED) != 0;
     outp.file_store = (inp.bools & FILESTORE) != 0;
     if outp.file_store {
+        // TODO: Need code here to read asset from file
     } else {
         match inp.asset {
             Some(asset1) => outp.asset = asset1,

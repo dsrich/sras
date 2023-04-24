@@ -1,7 +1,7 @@
 use escape::{encode, decode};
 
 mod db;
-use db::{asset};
+use db::{Asset};
 
 fn main() {
     println!("Hello, world!");
